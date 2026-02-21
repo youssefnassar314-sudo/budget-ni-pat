@@ -30,22 +30,14 @@
         }
         .budget-amount { font-size: 3rem; font-weight: 700; margin: 5px 0; }
         .quote-box { font-size: 0.85rem; font-style: italic; min-height: 40px; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; }
-        
         .cat-scroll { display: flex; overflow-x: auto; gap: 8px; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
         .cat-btn { flex: 0 0 auto; border: none; padding: 8px 15px; border-radius: 15px; background: white; font-weight: 600; font-size: 0.75rem; cursor: pointer; transition: 0.3s; }
         .cat-btn.active { background: var(--primary); color: white; }
-
         input, textarea { width: 100%; padding: 12px; margin: 5px 0; border: none; border-radius: 12px; background: #f0f2f5; box-sizing: border-box; font-family: inherit; }
         .main-btn { width: 100%; padding: 15px; border: none; border-radius: 15px; background: var(--success); color: white; font-weight: 700; cursor: pointer; margin-top: 10px; }
-        
         .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
         .summary-btn { padding: 10px; border: 2px solid var(--primary); border-radius: 15px; background: transparent; color: var(--primary); font-weight: 700; cursor: pointer; font-family: inherit; }
         .email-btn { padding: 10px; border: none; border-radius: 15px; background: var(--primary); color: white; font-weight: 700; cursor: pointer; font-family: inherit; }
-
-        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
-        .receipt { background: white; padding: 30px; border-radius: 20px; width: 280px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .receipt::before { content: ""; position: absolute; top: -10px; left: 0; right: 0; height: 15px; background: linear-gradient(-45deg, white 5px, transparent 0), linear-gradient(45deg, white 5px, transparent 0); background-size: 10px 15px; }
-
         .history-header { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; }
         .date-picker { border: none; background: none; font-family: inherit; font-weight: bold; color: var(--primary); cursor: pointer; font-size: 0.8rem; }
         .history { max-height: 250px; overflow-y: auto; margin-top: 10px; }
@@ -53,11 +45,13 @@
         .running-bal { font-size: 0.7rem; color: #636e72; font-weight: 600; display: block; margin-top: 2px; }
         .neg-bal { color: var(--danger); }
         .action-links { font-size: 0.7rem; display: flex; gap: 8px; justify-content: flex-end; margin-top: 5px; }
-
         .chart-container { margin-top: 15px; background: #fff; padding: 15px; border-radius: 20px; display: none; }
         .bar-row { display: flex; align-items: center; margin-bottom: 8px; font-size: 0.75rem; }
         .bar-bg { flex-grow: 1; background: #f0f2f5; height: 12px; border-radius: 6px; overflow: hidden; margin: 0 10px; }
         .bar-fill { height: 100%; background: var(--primary); border-radius: 6px; width: 0%; }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+        .receipt { background: white; padding: 30px; border-radius: 20px; width: 280px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .receipt::before { content: ""; position: absolute; top: -10px; left: 0; right: 0; height: 15px; background: linear-gradient(-45deg, white 5px, transparent 0), linear-gradient(45deg, white 5px, transparent 0); background-size: 10px 15px; }
     </style>
 </head>
 <body>
@@ -68,7 +62,6 @@
         <div class="budget-amount" id="bal-text">₱0</div>
         <div id="quote" class="quote-box">"Gora pa bes, keri pa!"</div>
     </div>
-
     <div class="cat-scroll">
         <button class="cat-btn active" onclick="setCat('🍔 Food', this)">Food</button>
         <button class="cat-btn" onclick="setCat('🚗 Transpo', this)">Transpo</button>
@@ -76,21 +69,17 @@
         <button class="cat-btn" onclick="setCat('🎓 Ambagan', this)">Ambagan</button>
         <button class="cat-btn" onclick="setCat('🛍️ Wants', this)">Wants</button>
     </div>
-
     <input type="number" id="price" placeholder="Magkano?">
     <textarea id="desc" placeholder="Details..."></textarea>
     <button class="main-btn" onclick="addLog()">Log Expense ✨</button>
-    
     <div class="btn-grid">
         <button class="summary-btn" onclick="toggleSummary()">Summary 📊</button>
         <button class="email-btn" onclick="sendEmailReport()">Email 📩</button>
     </div>
-
     <div id="chart-section" class="chart-container">
         <h4 style="margin:0 0 10px 0; font-size: 0.9rem;">Daily Division</h4>
         <div id="bars"></div>
     </div>
-
     <div class="history-header">
         <h3 style="font-size: 0.9rem; margin:0">History Log</h3>
         <input type="date" id="history-date" class="date-picker" onchange="updateUI()">
@@ -110,43 +99,33 @@
     </div>
 </div>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init("Kn8cV0QI2FC4Rx_Z5"); // Palitan mo 'to!
-   })();
-</script>
-
 <audio id="sound-success" src="https://assets.mixkit.co/active_storage/sfx/2004/2004-preview.mp3"></audio>
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
+    // INITIALIZE EMAILJS - PALITAN MO ITO
+    emailjs.init("YOUR_PUBLIC_KEY");
+
     const statusQuotes = {
-        safe: ["Yaman natin bes! Deserve ang extra rice.", "Gora pa, keri pa ng budget!", "Stay aesthetic and loaded, bes."],
-        low: ["Huy, tubig-tubig na lang muna tayo.", "Konti na lang bes, malapit na ang finish line.", "Tipid mode: On. Wag marupok sa kape."],
-        debt: ["Bes anyare? Utang is real.", "Stop muna ang add to cart, bes.", "Tulog na lang natin 'to, wala na tayong pera."]
+        safe: ["Yaman natin bes! Deserve ang extra rice.", "Gora pa, keri pa!", "Stay aesthetic, bes."],
+        low: ["Huy, tubig-tubig na lang muna.", "Konti na lang bes.", "Tipid mode: On."],
+        debt: ["Bes anyare? Utang is real.", "Stop muna ang add to cart.", "Wala na tayong pera."]
     };
 
     const getTodayDate = () => new Date().toLocaleDateString('en-CA');
-    const getDailyBudget = () => {
-        const d = new Date().getDay();
-        return (d === 0 || d === 6) ? 100 : 150;
-    };
-    
+    const getDailyBudget = () => (new Date().getDay() === 0 || new Date().getDay() === 6) ? 100 : 150;
 
     let cat = '🍔 Food';
-    let balance = localStorage.getItem('bes_v9_bal') === null ? getDailyBudget() : parseFloat(localStorage.getItem('bes_v9_bal'));
-    let logs = JSON.parse(localStorage.getItem('bes_v9_logs')) || [];
-    let lastDate = localStorage.getItem('bes_v9_date');
+    let balance = localStorage.getItem('pat_bal') === null ? getDailyBudget() : parseFloat(localStorage.getItem('pat_bal'));
+    let logs = JSON.parse(localStorage.getItem('pat_logs')) || [];
     const today = getTodayDate();
     
-    document.getElementById('history-date').value = today;
-
-    if (lastDate && lastDate !== today) {
+    if (localStorage.getItem('pat_date') !== today) {
         balance = getDailyBudget() + (balance < 0 ? balance : 0);
-        localStorage.setItem('bes_v9_date', today);
-    } else if (!lastDate) {
-        localStorage.setItem('bes_v9_date', today);
+        localStorage.setItem('pat_date', today);
     }
+
+    document.getElementById('history-date').value = today;
 
     function setCat(c, btn) {
         cat = c;
@@ -157,7 +136,6 @@
     function updateUI() {
         const viewDate = document.getElementById('history-date').value;
         document.getElementById('bal-text').innerText = `₱${Math.abs(balance).toFixed(2)}`;
-        
         const card = document.getElementById('card');
         const quoteBox = document.getElementById('quote');
         const statusLabel = document.getElementById('status-label');
@@ -165,66 +143,51 @@
         if (balance < 0) {
             card.style.background = "linear-gradient(135deg, #ff7675, #d63031)";
             statusLabel.innerText = "Overspent / Utang Mode";
-            quoteBox.innerText = statusQuotes.debt[Math.floor(Math.random() * statusQuotes.debt.length)];
+            quoteBox.innerText = statusQuotes.debt[0];
         } else if (balance < 50) {
             card.style.background = "linear-gradient(135deg, #fab1a0, #e17055)";
             statusLabel.innerText = "Running Low Bes!";
-            quoteBox.innerText = statusQuotes.low[Math.floor(Math.random() * statusQuotes.low.length)];
+            quoteBox.innerText = statusQuotes.low[0];
         } else {
             card.style.background = "linear-gradient(135deg, #6c5ce7, #a29bfe)";
             statusLabel.innerText = "Current Balance";
-            quoteBox.innerText = statusQuotes.safe[Math.floor(Math.random() * statusQuotes.safe.length)];
+            quoteBox.innerText = statusQuotes.safe[0];
         }
 
         const filteredLogs = logs.filter(l => l.date === viewDate);
         document.getElementById('history').innerHTML = filteredLogs.map((item) => {
             const realIdx = logs.indexOf(item);
-            const isDebt = item.runningBal < 0;
             return `
-                <div class="item-card" style="border-left-color: ${isDebt ? '#ff7675' : '#a29bfe'}">
+                <div class="item-card" style="border-left-color: ${item.runningBal < 0 ? '#ff7675' : '#a29bfe'}">
                     <div style="flex-grow:1">
                         <strong>${item.cat}</strong> 
-                        <small style="display:block; color:#b2bec3">${item.desc || 'No details'}</small>
-                        <span class="running-bal ${isDebt ? 'neg-bal' : ''}">
-                            ${isDebt ? 'Debt: -₱' + Math.abs(item.runningBal) : 'Left: ₱' + item.runningBal}
-                        </span>
+                        <small style="display:block; color:#b2bec3">${item.desc || '-'}</small>
+                        <span class="running-bal ${item.runningBal < 0 ? 'neg-bal' : ''}">${item.runningBal < 0 ? 'Debt' : 'Left'}: ₱${Math.abs(item.runningBal)}</span>
                     </div>
                     <div style="text-align:right">
                         <div style="font-weight:700;">-₱${item.price}</div>
                         <div class="action-links">
-                            <span onclick='showReceipt(${JSON.stringify(item)})' style="cursor:pointer; color:var(--primary)">👁️ View</span>
-                            <span onclick="delLog(${realIdx})" style="cursor:pointer; color:#ccc">❌</span>
+                            <span onclick='showReceipt(${JSON.stringify(item)})' style="cursor:pointer; color:var(--primary)">👁️</span>
+                            <span onclick="delLog(${realIdx})" style="cursor:pointer">❌</span>
                         </div>
                     </div>
-                </div>
-            `;
-        }).reverse().join('') || `<div style="text-align:center; color:#b2bec3; margin-top:20px; font-size:0.8rem;">No logs for this date.</div>`;
+                </div>`;
+        }).reverse().join('') || '<div style="text-align:center; color:#ccc; margin-top:20px;">No logs.</div>';
 
-        localStorage.setItem('bes_v9_bal', balance);
-        localStorage.setItem('bes_v9_logs', JSON.stringify(logs));
+        localStorage.setItem('pat_bal', balance);
+        localStorage.setItem('pat_logs', JSON.stringify(logs));
         renderChart(viewDate);
     }
 
     function addLog() {
-        const pInput = document.getElementById('price');
-        const dInput = document.getElementById('desc');
-        if (!pInput.value || pInput.value <= 0) return;
-
-        const amount = parseFloat(pInput.value);
-        balance -= amount;
-        const actualDate = getTodayDate();
-
-        const newLog = { 
-            cat, price: amount, desc: dInput.value, 
-            date: actualDate, timestamp: new Date().toLocaleString(),
-            runningBal: balance.toFixed(2)
-        };
-        logs.push(newLog);
-
-        showReceipt(newLog);
+        const p = document.getElementById('price');
+        const d = document.getElementById('desc');
+        if (!p.value) return;
+        balance -= parseFloat(p.value);
+        logs.push({ cat, price: parseFloat(p.value), desc: d.value, date: getTodayDate(), timestamp: new Date().toLocaleString(), runningBal: balance.toFixed(2) });
         document.getElementById('sound-success').play();
-        pInput.value = ''; dInput.value = '';
-        document.getElementById('history-date').value = actualDate;
+        showReceipt(logs[logs.length-1]);
+        p.value = ''; d.value = '';
         updateUI();
     }
 
@@ -232,65 +195,37 @@
         document.getElementById('receipt-price').innerText = `₱${log.price}`;
         document.getElementById('receipt-cat').innerText = log.cat;
         document.getElementById('receipt-desc').innerText = log.desc || "Expense Logged";
-        document.getElementById('receipt-date').innerText = log.timestamp || log.date;
-        let q = log.runningBal < 0 ? statusQuotes.debt[0] : (log.runningBal < 50 ? statusQuotes.low[0] : statusQuotes.safe[0]);
-        document.getElementById('receipt-quote').innerText = `"${q}"`;
+        document.getElementById('receipt-date').innerText = log.timestamp;
+        document.getElementById('receipt-quote').innerText = balance < 0 ? statusQuotes.debt[0] : statusQuotes.safe[0];
         document.getElementById('receipt-modal').style.display = 'flex';
     }
 
     function closeReceipt() { document.getElementById('receipt-modal').style.display = 'none'; }
-
-    function delLog(realIdx) {
-        if(!confirm("Burahin na 'to bes?")) return;
-        balance += logs[realIdx].price;
-        logs.splice(realIdx, 1);
-        updateUI();
-    }
-
-    function toggleSummary() {
-        const section = document.getElementById('chart-section');
-        section.style.display = section.style.display === 'block' ? 'none' : 'block';
-    }
+    function delLog(i) { if(confirm("Delete?")) { balance += logs[i].price; logs.splice(i,1); updateUI(); } }
+    function toggleSummary() { const s = document.getElementById('chart-section'); s.style.display = s.style.display === 'block' ? 'none' : 'block'; }
 
     function renderChart(date) {
-        const dayLogs = logs.filter(l => l.date === date);
-        const totals = {};
-        let grandTotal = 0;
-        dayLogs.forEach(l => { totals[l.cat] = (totals[l.cat] || 0) + l.price; grandTotal += l.price; });
-        const barsHtml = Object.keys(totals).map(category => {
-            const percent = (totals[category] / grandTotal) * 100;
-            return `
-                <div class="bar-row">
-                    <div style="width:70px">${category.split(' ')[1]}</div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: ${percent}%"></div></div>
-                    <div style="width:50px; text-align:right">₱${totals[category]}</div>
-                </div>
-            `;
-        }).join('');
-        document.getElementById('bars').innerHTML = barsHtml || '<p style="font-size:0.7rem; color:#ccc">No spending record.</p>';
+        const dLogs = logs.filter(l => l.date === date);
+        const totals = {}; let grand = 0;
+        dLogs.forEach(l => { totals[l.cat] = (totals[l.cat] || 0) + l.price; grand += l.price; });
+        document.getElementById('bars').innerHTML = Object.keys(totals).map(c => `
+            <div class="bar-row">
+                <div style="width:70px">${c.split(' ')[1]}</div>
+                <div class="bar-bg"><div class="bar-fill" style="width: ${(totals[c]/grand)*100}%"></div></div>
+                <div style="width:50px; text-align:right">₱${totals[c]}</div>
+            </div>`).join('') || 'No data.';
     }
 
     function sendEmailReport() {
         const viewDate = document.getElementById('history-date').value;
-        const dayLogs = logs.filter(l => l.date === viewDate);
-
-        if (dayLogs.length === 0) {
-            alert("Wala kang gastos sa date na 'to bes!");
-            return;
-        }
-
-        let summaryText = `Gastos Report for ${viewDate}:\n\n`;
-        let totalSpend = 0;
-        dayLogs.forEach(l => {
-            summaryText += `- ${l.cat}: ₱${l.price} (${l.desc || 'No details'})\n`;
-            totalSpend += l.price;
-        });
-        summaryText += `\nTotal Day Gastos: ₱${totalSpend}\nRemaining: ₱${balance}`;
-
-        emailjs.send('service_1tn5no5', 'template_g6ffi4o', {
-            date: viewDate,
-            summary: summaryText
-        }).then(() => alert('Sent na bes! 💌'), (err) => alert('Error bes: ' + JSON.stringify(err)));
+        const dLogs = logs.filter(l => l.date === viewDate);
+        if (dLogs.length === 0) return alert("Walang gastos!");
+        let summaryText = `Report for ${viewDate}:\n\n` + dLogs.map(l => `- ${l.cat}: ₱${l.price} (${l.desc || 'No details'})`).join('\n');
+        summaryText += `\n\nTotal: ₱${dLogs.reduce((s,i)=>s+i.price,0)}\nRemaining: ₱${balance}`;
+        
+        // PALITAN MO ITO NG SERVICE_ID AT TEMPLATE_ID MO
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', { date: viewDate, summary: summaryText })
+            .then(() => alert('Sent na bes! 💌'), (err) => alert('Error: ' + JSON.stringify(err)));
     }
 
     updateUI();
