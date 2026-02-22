@@ -131,9 +131,9 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <script>
-    emailjs.init("YOUR_PUBLIC_KEY"); // PALITAN MO ITO BES
+    emailjs.init("Kn8cV0QI2FC4Rx_Z5"); // PALITAN MO ITO BES
 
-    const MY_PIN = "1234"; 
+    const MY_PIN = "0126"; 
     const statusQuotes = {
         safe: ["Yaman natin bes!", "Gora pa, keri pa!", "Stay aesthetic."],
         low: ["Huy, tubig na lang muna.", "Konti na lang bes.", "Tipid mode: On."],
@@ -253,7 +253,7 @@
         const t = new Date();
         const last = new Date(t.getFullYear(), t.getMonth() + 1, 0).getDate();
         if (t.getDate() === last && localStorage.getItem('pat_last_sent') != t.getMonth()) {
-            emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', { date: today, summary: `Monthly Savings: ₱${monthlySavings.toFixed(2)}` })
+            emailjs.send('service_1tn5no5','template_g6ffi4o', { date: today, summary: `Monthly Savings: ₱${monthlySavings.toFixed(2)}` })
                 .then(() => { localStorage.setItem('pat_last_sent', t.getMonth()); monthlySavings = 0; localStorage.setItem('pat_monthly_savings', 0); });
         }
     }
@@ -262,10 +262,11 @@
         const dLogs = logs.filter(l => l.date === document.getElementById('history-date').value);
         if (dLogs.length === 0) return alert("Walang gastos!");
         let s = `Report: ${document.getElementById('history-date').value}\n\n` + dLogs.map(l => `- ${l.cat}: ₱${l.price}`).join('\n');
-        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', { date: today, summary: s }).then(() => alert('Sent! 💌'));
+        emailjs.send('service_1tn5no5','template_g6ffi4o', { date: today, summary: s }).then(() => alert('Sent! 💌'));
     }
 
     updateUI();
 </script>
 </body>
 </html>
+
