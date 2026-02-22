@@ -233,7 +233,21 @@
     function closeReceipt() { document.getElementById('receipt-modal').style.display = 'none'; }
     function delLog(i) { if(confirm("Delete?")) { balance += logs[i].price; logs.splice(i,1); updateUI(); } }
     function toggleSummary() { const s = document.getElementById('chart-section'); s.style.display = s.style.display === 'block' ? 'none' : 'block'; }
-    function resetAll() { if(confirm("Clear everything?")) { localStorage.clear(); location.reload(); } }
+    function resetAll() {
+    if(confirm("Burahin lahat ng logs at i-reset ang balance? No balikan na 'to bes!")) {
+        // Clear lahat ng data
+        localStorage.clear();
+        
+        // I-set agad ang fresh budget para hindi mag-rollover pag-refresh
+        const freshBudget = getDailyBudget();
+        localStorage.setItem('pat_bal', freshBudget);
+        localStorage.setItem('pat_date', getTodayDate());
+        localStorage.setItem('pat_monthly_savings', 0);
+        
+        // Reload page
+        location.reload();
+    }
+}
 
     function renderChart(date) {
         const dLogs = logs.filter(l => l.date === date);
@@ -259,14 +273,46 @@
     }
 
     function sendEmailReport() {
-        const dLogs = logs.filter(l => l.date === document.getElementById('history-date').value);
-        if (dLogs.length === 0) return alert("Walang gastos!");
-        let s = `Report: ${document.getElementById('history-date').value}\n\n` + dLogs.map(l => `- ${l.cat}: ₱${l.price}`).join('\n');
-        emailjs.send('service_1tn5no5','template_g6ffi4o', { date: today, summary: s }).then(() => alert('Sent! 💌'));
-    }
+    const viewDate = document.getElementById('history-date').value;
+    const dLogs = logs.filter(l => l.date === viewDate);
+    
+    if (dLogs.length === 0) return alert("Walang gastos sa araw na 'to bes! 😅");
+
+    // Dito natin bubuuin yung listahan ng pinagkagastusan mo
+    let detailsList = `RESIBO REPORT - ${viewDate}\n`;
+    detailsList += `==========================\n\n`;
+
+    dLogs.forEach(l => {
+        // Format: [Category] ₱Price - Details
+        detailsList += `📍 [${l.cat}] ₱${l.price} \n`;
+        detailsList += `   Details: ${l.desc || 'No details'}\n`;
+        detailsList += `   Time: ${l.timestamp.split(', ')[1]}\n`; // Oras lang para hindi mahaba
+        detailsList += `--------------------------\n`;
+    });
+
+    const totalDay = dLogs.reduce((sum, item) => sum + item.price, 0);
+    
+    detailsList += `\nTOTAL GASTOS TODAY: ₱${totalDay.toFixed(2)}\n`;
+    detailsList += `REMAINING BALANCE: ₱${balance}\n`;
+    detailsList += `\nStay safe and budget-wise, Pat! ✨`;
+
+    // Siguraduhin na 'summary' ang variable name sa EmailJS template mo
+    const templateParams = {
+        date: viewDate,
+        summary: detailsList
+    };
+
+    emailjs.send('service_1tn5no5','template_g6ffi4o', templateParams)
+        .then(() => {
+            alert('Sent na ang daily receipt sa email mo, bes! 💌');
+        }, (err) => {
+            alert('Ayaw mag-send bes. Error: ' + JSON.stringify(err));
+        });
+}
 
     updateUI();
 </script>
 </body>
 </html>
+
 
